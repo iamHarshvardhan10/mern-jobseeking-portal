@@ -130,3 +130,54 @@ export const logout = async (req, res) => {
         })
     }
 }
+
+
+// update profile
+
+export const updateProfile = async (req, res) => {
+    try {
+        // destructure from req.body
+        const { fullName, phoneNumber, bio, skills } = req.body;
+        if (!fullName || !phoneNumber || !bio || !skills) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please fill all fields'
+            })
+        }
+
+        // get user id from req.id
+        const userId = req.user.id;
+        // console.log(userId)
+        // update user in database
+        const userDetails = await User.findById(userId)
+        const profileDetails = await Profile.findById(userDetails.profile)
+
+        // update user
+        const updateUser = await User.findByIdAndUpdate(userId, {
+            fullName,
+            phoneNumber
+        })
+        await updateUser.save()
+
+        // update profile
+        const skilled = skills.split(',')
+        profileDetails.bio = bio;
+        profileDetails.skills = skilled;
+
+        await profileDetails.save()
+
+        const updateUserDetails = await User.findById(userId).populate('profile').exec()
+
+        return res.status(200).json({
+            success: true,
+            message: 'Profile Updated Successfully',
+            updateUserDetails
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Internal Server Error'
+        })
+    }
+}

@@ -19,6 +19,7 @@ export const verifyUser = async (req, res, next) => {
                 success: false
             })
         }
+        next()
     } catch (error) {
         return res.status(500).json({
             message: "Error verifying user",
