@@ -103,3 +103,40 @@ export const getSingleCompany = async (req, res) => {
         })
     }
 }
+
+// update company 
+
+export const updateCompany = async (req, res) => {
+    try {
+        const { name, description, website, location } = req.body;
+        if (!name || !description || !website || !location) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please fill all fields'
+            })
+        }
+        const companyId = req.params.id
+        console.log(companyId)
+        // find company by ID
+        const company = await Company.findByIdAndUpdate(companyId, { name, description, website, location }, { new: true })
+        // check validation
+        if (!company) {
+            return res.status(400).json({
+                success: false,
+                message: 'Company Not Found with this ID'
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Company Updated',
+            company
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Internal Server Error'
+        })
+    }
+}
