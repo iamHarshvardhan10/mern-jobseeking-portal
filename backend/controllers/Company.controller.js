@@ -39,3 +39,33 @@ export const registerCompany = async (req, res) => {
         })
     }
 }
+
+
+// get company by user
+
+export const getCompany = async (req, res) => {
+    try {
+        const userId = req.user.id
+        console.log(userId)
+
+        // find company by userID
+        const company = await Company.find({ userId })
+        console.log(company)
+        if (!company) {
+            return res.status(400).json({
+                success: false,
+                message: 'No Company Found'
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'Company Found',
+            company
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Internal Server Error'
+        })
+    }
+}
