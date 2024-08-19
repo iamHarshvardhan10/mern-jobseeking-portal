@@ -6,6 +6,7 @@ import mongoDBConnect from './utils/db.js'
 
 // ROUTES PATH
 import userRoutes from './routes/User.route.js'
+import companyRoutes from './routes/Company.route.js'
 dotenv.config({})
 
 const app = express()
@@ -20,6 +21,8 @@ app.use(cors({
 
 // USER ROUTE
 app.use('/api/v1/user', userRoutes)
+// COMPANY ROUTE
+app.use('/api/v1/company', companyRoutes)
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
