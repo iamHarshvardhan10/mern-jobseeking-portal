@@ -69,3 +69,37 @@ export const getCompany = async (req, res) => {
         })
     }
 }
+
+// get single company details 
+
+export const getSingleCompany = async (req, res) => {
+    try {
+        const companyId = req.params.id
+        console.log(companyId)
+        if (!companyId) {
+            return res.status(400).json({
+                success: false,
+                message: 'Company ID is required'
+            })
+        }
+        // find company by ID
+        const company = await Company.findById(companyId)
+        // check validation
+        if (!company) {
+            return res.status(400).json({
+                success: false,
+                message: 'Company Not Found with this ID'
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'Company Found',
+            company
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Internal Server Error',
+            success: false
+        })
+    }
+}
