@@ -110,3 +110,30 @@ export const getJobById = async (req, res) => {
         })
     }
 }
+
+
+// get admin jobs
+
+export const getAdminJob = async (req, res) => {
+    try {
+        const adminId = req.user.id;
+        const jobs = await Job.find({ created_by: adminId })
+            .populate({ path: 'company' });
+        if (!jobs) {
+            return res.status(404).json({
+                success: false,
+                message: 'No Jobs Found'
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Jobs retrieved successfully",
+            jobs
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Internal Server Error'
+        })
+    }
+}
