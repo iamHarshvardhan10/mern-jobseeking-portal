@@ -45,3 +45,40 @@ export const postJob = async (req, res) => {
         })
     }
 }
+
+
+// get All Jobs
+
+export const getAllJobs = async (req, res) => {
+    try {
+        const keyword = req.query.keyword || "";
+        const query = {
+            $or: [
+                { title: { $regex: keyword, $options: 'i' } },
+                { description: { $regex: keyword, $options: 'i' } }
+            ]
+        }
+
+        const jobs = await Job.find(query)
+            .populate({ path: 'company' })
+            .populate({ path: 'created_by' })
+            .sort({ createdAt: -1 })
+        if (jobs.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No jobs found"
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Jobs retrieved successfully",
+            jobs
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Error fetching jobs",
+        })
+    }
+}
