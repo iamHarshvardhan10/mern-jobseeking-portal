@@ -56,3 +56,36 @@ export const applyJob = async (req, res) => {
         })
     }
 }
+
+// get applied jobs
+
+export const getAppliedJobs = async (req, res) => {
+    try {
+        const userId = req.id;
+        const application = await Application.find({ applicant: userId }).sort({ createdAt: -1 }).populate({
+            path: 'job',
+            options: { sort: { createdAt: -1 } },
+            populate: {
+                path: 'company',
+                options: { sort: { createdAt: -1 } }
+            }
+        })
+
+        if (!application) {
+            return res.status(404).json({
+                message: "No jobs applied",
+                success: false
+            })
+        }
+        return res.status(200).json({
+            message: "Jobs Applied Successfully",
+            success: true,
+            application
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error fetching applied jobs',
+            error: error.message
+        })
+    }
+}
