@@ -90,6 +90,7 @@ export const login = async (req, res) => {
             })
         }
         // generate token using JWT
+        // eslint-disable-next-line no-undef
         const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, { expiresIn: "24h" })
         // cookies
         const options = {
@@ -107,7 +108,7 @@ export const login = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: 'Internal Server Error'
+            message: error.message
         })
     }
 }
@@ -126,7 +127,7 @@ export const logout = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: 'Internal Server Error'
+            message: error.message
         })
     }
 }
@@ -177,7 +178,7 @@ export const updateProfile = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: 'Internal Server Error'
+            message: error.message
         })
     }
 }
