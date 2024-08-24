@@ -1,11 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
 import { useState } from "react";
+import { USER_API_ENDPOINTS } from "@/utils/constant";
+import axios from "axios";
+import { toast } from "sonner";
 
 const SignUp = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
+  // console.log(API_URL);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -22,9 +28,26 @@ const SignUp = () => {
     setFormData({ ...formData, file: e.target.files?.[0] });
   };
 
-  const formSubmit = (e) => {
+  const formSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const res = await axios.post(
+        `${API_URL}/${USER_API_ENDPOINTS.register}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      if (res.data.success) {
+        navigate("/login");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -89,7 +112,7 @@ const SignUp = () => {
                     name="role"
                     value="student"
                     className="cursor-pointer"
-                    checked={formData.role === "Student"}
+                    checked={formData.role === "student"}
                     onChange={handleChange}
                   />
                   <Label htmlFor="r1">Student</Label>
@@ -100,7 +123,7 @@ const SignUp = () => {
                     name="role"
                     value="recruiter"
                     className="cursor-pointer"
-                    checked={formData.role === "Recruiter"}
+                    checked={formData.role === "recruiter"}
                     onChange={handleChange}
                   />
                   <Label htmlFor="r2">Recruiter</Label>
