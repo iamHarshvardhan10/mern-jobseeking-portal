@@ -1,12 +1,13 @@
-import HeroSection from "../HeroSection"
-
+import CategoryCarousel from "../CategoryCarousel";
+import HeroSection from "../HeroSection";
 
 const Home = () => {
   return (
     <div>
-      <HeroSection/>
+      <HeroSection />
+      <CategoryCarousel />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
