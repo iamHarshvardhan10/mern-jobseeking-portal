@@ -8,10 +8,13 @@ import { USER_API_ENDPOINTS } from "@/utils/constant";
 import axios from "axios";
 import { toast } from "sonner";
 
+
+
 const SignUp = () => {
   // const API_URL = import.meta.env.VITE_API_URL;
   // console.log(API_URL);
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -136,9 +139,11 @@ const SignUp = () => {
               />
             </div>
           </div>
+
           <Button type="submit" className="w-full my-4">
             Signup
           </Button>
+
           <span className="text-sm">
             Already Have An Account?
             <Link to={"/login"} className="text-blue-600">

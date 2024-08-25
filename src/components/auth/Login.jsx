@@ -5,8 +5,11 @@ import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { USER_API_ENDPOINTS } from "@/utils/constant";
+import { signFail, signInStart, signSuccess } from "@/redux/slice/authSlice";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +18,8 @@ const Login = () => {
     role: "",
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,6 +28,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      dispatch(signInStart(true));
+      dispatch(signFail(null));
       const res = await axios.post(`${USER_API_ENDPOINTS.login}`, formData, {
         header: {
           "Content-Type": "application/json",
@@ -32,10 +39,15 @@ const Login = () => {
 
       if (res.data.success) {
         navigate("/");
+        dispatch(signFail(null));
+        dispatch(signSuccess(formData));
         toast.success(res.data.message);
       }
     } catch (error) {
+      dispatch(signFail(error.message));
       toast(error.message);
+    } finally {
+      dispatch(signInStart(false));
     }
   };
   return (
@@ -99,9 +111,17 @@ const Login = () => {
               </RadioGroup>
             </div>
           </div>
-          <Button type="submit" className="w-full my-4">
-            Login
-          </Button>
+          {loading ? (
+            <Button className="w-full my-4">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please Wait
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full my-4">
+              Login
+            </Button>
+          )}
+
           <span className="text-sm">
             Dont Have An Account?
             <Link to={"/sign-up"} className="text-blue-600">
