@@ -1,5 +1,6 @@
 import Login from "./components/auth/Login";
 import SignUp from "./components/auth/SignUp";
+import Profile from "./components/Profile";
 import Browse from "./components/shared/Browse";
 import Footer from "./components/shared/Footer";
 import Home from "./components/shared/Home";
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/jobs" element={<Job />} />
           <Route path="/browse" element={<Browse />} />
+          <Route path="/view-profile" element={<Profile />} />
         </Routes>
         <Footer />
       </BrowserRouter>

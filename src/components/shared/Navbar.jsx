@@ -71,7 +71,7 @@ const Navbar = () => {
                 <div className="flex flex-row items-center text-gray-600 mt-2">
                   <div className="flex w-fit items-center gap-2 cursor-pointer border-none outline-none">
                     <Button variant="link">
-                      <User2 className="px-1" /> View Profile
+                      <User2 className="px-1" /> <Link to={'/view-profile'}>View Profile</Link>
                     </Button>
                   </div>
                   <div className="flex w-fit items-center gap-2 cursor-pointer border-none outline-none">
