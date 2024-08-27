@@ -1,5 +1,6 @@
 import Login from "./components/auth/Login";
 import SignUp from "./components/auth/SignUp";
+import JobDescription from "./components/JobDescription";
 import Profile from "./components/Profile";
 import Browse from "./components/shared/Browse";
 import Footer from "./components/shared/Footer";
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/jobs" element={<Job />} />
+          <Route path="/description/:id" element={<JobDescription />} />
           <Route path="/browse" element={<Browse />} />
           <Route path="/view-profile" element={<Profile />} />
         </Routes>

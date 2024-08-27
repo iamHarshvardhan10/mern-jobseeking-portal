@@ -2,8 +2,11 @@ import { Bookmark } from "lucide-react";
 import { Button } from "./ui/button";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
+import { useNavigate } from "react-router-dom";
 
 const JobCard = () => {
+  const navigate = useNavigate();
+  const id = "djdfjoedsfjfio";
   return (
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100">
       <div className="flex items-center justify-between">
@@ -30,12 +33,23 @@ const JobCard = () => {
         <p className="text-sm text-gray-600">Desc</p>
       </div>
       <div className="flex items-center gap-2 mt-4">
-        <Badge variant={'outline'} className={"text-blue-700 font-bold"}>Positions</Badge>
-        <Badge variant={'outline'} className={"text-blue-700 font-bold"}>JobType</Badge>
-        <Badge variant={'outline'} className={"text-blue-700 font-bold"}>Salary</Badge>
+        <Badge variant={"outline"} className={"text-blue-700 font-bold"}>
+          Positions
+        </Badge>
+        <Badge variant={"outline"} className={"text-blue-700 font-bold"}>
+          JobType
+        </Badge>
+        <Badge variant={"outline"} className={"text-blue-700 font-bold"}>
+          Salary
+        </Badge>
       </div>
       <div className="flex items-center gap-4 mt-4">
-        <Button variant="outline">Details</Button>
+        <Button
+          variant="outline"
+          onClick={() => navigate(`/description/${id}`)}
+        >
+          Details
+        </Button>
         <Button className="bg-[#7209b7]">Save For Later</Button>
       </div>
     </div>
