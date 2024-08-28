@@ -4,10 +4,13 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import AppliedJobs from "./AppliedJobs";
+import UpdateProfileDialog from "./UpdateProfileDialog";
+import { useState } from "react";
 
 const Skills = ["frotned", "backend", "mern"];
 const isResume = false;
 const Profile = () => {
+  const [open, setOpen] = useState(false);
   return (
     <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8">
       <div className="flex justify-between">
@@ -26,7 +29,11 @@ const Profile = () => {
             </p>
           </div>
         </div>
-        <Button className="text-right" variant="outline">
+        <Button
+          className="text-right"
+          variant="outline"
+          onClick={() => setOpen(true)}
+        >
           <Pen />
         </Button>
       </div>
@@ -69,6 +76,7 @@ const Profile = () => {
         {/* Applied Job Title */}
         <AppliedJobs />
       </div>
+      <UpdateProfileDialog open={open} setOpen={setOpen} />
     </div>
   );
 };
