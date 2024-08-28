@@ -6,11 +6,13 @@ import { Label } from "./ui/label";
 import AppliedJobs from "./AppliedJobs";
 import UpdateProfileDialog from "./UpdateProfileDialog";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-const Skills = ["frotned", "backend", "mern"];
+// const Skills = ["frotned", "backend", "mern"];
 const isResume = false;
 const Profile = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useSelector((state) => state.auth);
   return (
     <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8">
       <div className="flex justify-between">
@@ -22,11 +24,8 @@ const Profile = () => {
             />
           </Avatar>
           <div>
-            <h1 className="font-medium text-xl">Harshvardhan</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Excepturi, magnam.
-            </p>
+            <h1 className="font-medium text-xl">{user?.fullName}</h1>
+            <p>{user?.profile?.bio}</p>
           </div>
         </div>
         <Button
@@ -40,18 +39,18 @@ const Profile = () => {
       <div className="my-5">
         <div className="flex items-center gap-3 my-2">
           <Mail />
-          <span>Email</span>
+          <span>{user?.email}</span>
         </div>
         <div className="flex items-center gap-3 my-2">
           <Contact />
-          <span>Number</span>
+          <span>{user?.phoneNumber}</span>
         </div>
       </div>
       <div className="my-5">
         <h1>Skills</h1>
         <div className="flex items-center gap-1">
-          {Skills.length > 0 ? (
-            Skills.map((item, index) => <Badge key={index}>{item}</Badge>)
+          {user?.profile?.skills.length > 0 ? (
+            user?.profile?.skills.map((item, index) => <Badge key={index}>{item}</Badge>)
           ) : (
             <span>NA</span>
           )}
@@ -65,7 +64,7 @@ const Profile = () => {
             href="https://google.com"
             className="text-blue-500 w-full hover:underline cursor-pointer"
           >
-            reusme
+            {user?.profile?.resume}
           </a>
         ) : (
           <span>NA</span>
