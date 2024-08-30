@@ -1,7 +1,9 @@
+import getDataUri from "backend/utils/datauri.js";
 import { Profile } from "../model/Profile.model.js";
 import { User } from "../model/User.model.js";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import cloudinary from "backend/utils/cloudinary.js";
 // controller for registering user 
 export const register = async (req, res) => {
     try {
@@ -153,6 +155,10 @@ export const updateProfile = async (req, res) => {
         const userDetails = await User.findById(userId)
         const profileDetails = await Profile.findById(userDetails.profile)
 
+        // file
+        const file = req.file;
+        const fielUrl = getDataUri(file)
+        const cloudResponse = await cloudinary.uploader.upload(fielUrl.content)
         // update user
         const updateUser = await User.findByIdAndUpdate(userId, {
             fullName,
@@ -164,6 +170,11 @@ export const updateProfile = async (req, res) => {
         const skilled = skills.split(',')
         profileDetails.bio = bio;
         profileDetails.skills = skilled;
+
+        if (cloudResponse) {
+            profileDetails.resume = cloudResponse.secure_url,
+            profileDetails.profilePhoto = cloudResponse.secure_url
+        }
 
         await profileDetails.save()
 
