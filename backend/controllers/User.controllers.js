@@ -1,9 +1,9 @@
-import getDataUri from "backend/utils/datauri.js";
+import getDataUri from "../utils/datauri.js";
 import { Profile } from "../model/Profile.model.js";
 import { User } from "../model/User.model.js";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import cloudinary from "backend/utils/cloudinary.js";
+import cloudinary from "../utils/cloudinary.js";
 // controller for registering user 
 export const register = async (req, res) => {
     try {
@@ -25,6 +25,10 @@ export const register = async (req, res) => {
             })
         }
 
+        const file = req.file;
+        const fileUrl = getDataUri(file)
+        const profilePhoto = cloudinary.uploader.upload(fileUrl.content)
+
         // hashpassowrd 
         const hashedPassword = await bcrypt.hash(password, 10)
         // create profile 
@@ -33,7 +37,7 @@ export const register = async (req, res) => {
             skills: null,
             resume: null,
             resumeOriginalName: null,
-            profilePhoto: null
+            profilePhoto: profilePhoto
 
         })
         // create new user
@@ -173,7 +177,7 @@ export const updateProfile = async (req, res) => {
 
         if (cloudResponse) {
             profileDetails.resume = cloudResponse.secure_url,
-            profileDetails.profilePhoto = cloudResponse.secure_url
+                profileDetails.profilePhoto = cloudResponse.secure_url
         }
 
         await profileDetails.save()

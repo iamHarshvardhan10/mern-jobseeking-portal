@@ -8,8 +8,6 @@ import { USER_API_ENDPOINTS } from "@/utils/constant";
 import axios from "axios";
 import { toast } from "sonner";
 
-
-
 const SignUp = () => {
   // const API_URL = import.meta.env.VITE_API_URL;
   // console.log(API_URL);
@@ -21,6 +19,7 @@ const SignUp = () => {
     phoneNumber: "",
     password: "",
     role: "",
+    profilePhoto: "",
   });
 
   const handleChange = (e) => {
@@ -28,7 +27,7 @@ const SignUp = () => {
   };
 
   const handleFile = (e) => {
-    setFormData({ ...formData, file: e.target.files?.[0] });
+    setFormData({ ...formData, profilePhoto: e.target.files?.[0] });
   };
 
   const formSubmit = async (e) => {
