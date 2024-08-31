@@ -1,14 +1,15 @@
-import getDataUri from "../utils/datauri.js";
+// import getDataUri from "../utils/datauri.js";
 import { Profile } from "../model/Profile.model.js";
 import { User } from "../model/User.model.js";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import cloudinary from "../utils/cloudinary.js";
+// import cloudinary from "../utils/cloudinary.js";
 // controller for registering user 
 export const register = async (req, res) => {
     try {
         // destructuring from req body
         const { fullName, email, phoneNumber, password, role } = req.body;
+        console.log(fullName, email, phoneNumber, password, role)
         // check all field 
         if (!fullName || !email || !phoneNumber || !password || !role) {
             return res.status(400).json({
@@ -25,9 +26,9 @@ export const register = async (req, res) => {
             })
         }
 
-        const file = req.file;
-        const fileUrl = getDataUri(file)
-        const profilePhoto = cloudinary.uploader.upload(fileUrl.content)
+        // const file = req.file;
+        // const fileUrl = getDataUri(file)
+        // const profilePhoto = cloudinary.uploader.upload(fileUrl.content)
 
         // hashpassowrd 
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -37,7 +38,7 @@ export const register = async (req, res) => {
             skills: null,
             resume: null,
             resumeOriginalName: null,
-            profilePhoto: profilePhoto
+            profilePhoto: null,
 
         })
         // create new user
@@ -160,9 +161,9 @@ export const updateProfile = async (req, res) => {
         const profileDetails = await Profile.findById(userDetails.profile)
 
         // file
-        const file = req.file;
-        const fielUrl = getDataUri(file)
-        const cloudResponse = await cloudinary.uploader.upload(fielUrl.content)
+        // const file = req.file;
+        // const fielUrl = getDataUri(file)
+        // const cloudResponse = await cloudinary.uploader.upload(fielUrl.content)
         // update user
         const updateUser = await User.findByIdAndUpdate(userId, {
             fullName,
@@ -175,10 +176,10 @@ export const updateProfile = async (req, res) => {
         profileDetails.bio = bio;
         profileDetails.skills = skilled;
 
-        if (cloudResponse) {
-            profileDetails.resume = cloudResponse.secure_url,
-                profileDetails.profilePhoto = cloudResponse.secure_url
-        }
+        // if (cloudResponse) {
+        //     profileDetails.resume = cloudResponse.secure_url,
+        //         profileDetails.profilePhoto = cloudResponse.secure_url
+        // }
 
         await profileDetails.save()
 

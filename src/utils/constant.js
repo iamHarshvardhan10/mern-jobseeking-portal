@@ -5,3 +5,8 @@ export const USER_API_ENDPOINTS = {
     login: `${API_URL}/api/v1/user/login`,
     update: `${API_URL}/api/v1/user/updateProfile`,
 }
+
+
+export const JOB_API_ENDPOINTS = {
+    get:`${API_URL}/`
+}
