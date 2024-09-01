@@ -11,6 +11,7 @@ export const verifyUser = async (req, res, next) => {
         }
         try {
 
+            // eslint-disable-next-line no-undef
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
             req.user = decoded
         } catch (error) {

@@ -8,7 +8,7 @@ const router = express.Router()
 // post job
 router.post('/postJob', verifyUser, postJob)
 // getAll jobs
-router.get('/getAllJobs', verifyUser, getAllJobs)
+router.get('/getAllJobs',  getAllJobs)
 // get job by id
 router.get('/getJob/:id', verifyUser, getJobById)
 // get Admin Jobs
