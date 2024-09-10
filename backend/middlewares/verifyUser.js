@@ -2,7 +2,12 @@ import jwt from 'jsonwebtoken'
 
 export const verifyUser = async (req, res, next) => {
     try {
-        const token = req.cookies.token || req.body.token || req.header('Authorization')?.replace('Bearer ', '')
+        // const token = req.cookies.token || req.body.token || req.header('Authorization')?.replace('Bearer ', '')
+        const token = req.cookies.token;
+        console.log(token)
+        console.log(req.cookies)
+        console.log(req.body)
+        console.log(req.header)
         if (!token) {
             return res.status(401).json({
                 message: 'Unauthorized',
@@ -17,7 +22,8 @@ export const verifyUser = async (req, res, next) => {
         } catch (error) {
             return res.status(401).json({
                 message: 'Invalid token',
-                success: false
+                success: false,
+                error: error.message
             })
         }
         next()

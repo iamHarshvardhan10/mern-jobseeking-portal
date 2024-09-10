@@ -8,7 +8,7 @@ import mongoDBConnect from './utils/db.js'
 import userRoutes from './routes/User.route.js'
 import companyRoutes from './routes/Company.route.js'
 import jobRoutes from './routes/Job.route.js'
-dotenv.config({})
+dotenv.config()
 
 const app = express()
 app.use(express.urlencoded({ extended: true }))
