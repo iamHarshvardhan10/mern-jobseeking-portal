@@ -8,5 +8,6 @@ export const USER_API_ENDPOINTS = {
 
 
 export const JOB_API_ENDPOINTS = {
-    getAllJobs:`${API_URL}/api/v1/job/getAllJobs`
+    getAllJobs:`${API_URL}/api/v1/job/getAllJobs`,
+    getAllUserJobs:`${API_URL}/api/v1/job/getAllJobsForUser`
 }

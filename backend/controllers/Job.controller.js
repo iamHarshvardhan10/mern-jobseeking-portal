@@ -8,7 +8,7 @@ export const postJob = async (req, res) => {
         const { title, description, requirements, salary, location, exLevel, jobType, position, companyId, created_by } = req.body;
 
         // check all field
-        if (!title || !description || !requirements || !salary || !exLevel || !location || !jobType || !position || !companyId) {
+        if (!title || !description || !requirements || !salary || !exLevel || !location || !jobType || !position || !companyId || created_by) {
             return res.status(400).json({ message: "Please fill all fields" });
         }
         console.log(title, description, requirements, salary, location, exLevel, jobType, companyId, position)
@@ -78,7 +78,7 @@ export const getAllJobs = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: "Error fetching jobs",
+            message: error.message,
         })
     }
 }
@@ -106,7 +106,7 @@ export const getJobById = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: "Error fetching job",
+            message: error.message,
         })
     }
 }
@@ -133,7 +133,34 @@ export const getAdminJob = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: 'Internal Server Error'
+            message: error.message
+        })
+    }
+}
+
+
+
+// get all jobs from database
+
+export const getAllJobsForUser = async (req, res) => {
+    try {
+        const jobs = await Job.find({})
+
+        if (jobs.length === 0) {
+            return res.status(404).json({
+                message: 'No Jobs Found'
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'All Jobs Retrived Successfully',
+            jobs
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
         })
     }
 }

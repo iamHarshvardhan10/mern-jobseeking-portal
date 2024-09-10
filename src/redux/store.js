@@ -14,7 +14,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    job: jobReducer
+    jobs: jobReducer
 })
 
 

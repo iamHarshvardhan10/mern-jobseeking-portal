@@ -1,15 +1,15 @@
 import CategoryCarousel from "../CategoryCarousel";
 import HeroSection from "../HeroSection";
-import useCustomHook from "../hook/useCustomHook";
+import useGetAllJobs from "../hook/useGetAllJobs";
 import LatestJobs from "../LatestJobs";
 
 const Home = () => {
-  useCustomHook()
+  useGetAllJobs();
   return (
     <div>
       <HeroSection />
       <CategoryCarousel />
-      <LatestJobs/>
+      <LatestJobs />
     </div>
   );
 };
