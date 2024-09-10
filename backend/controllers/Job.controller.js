@@ -144,7 +144,7 @@ export const getAdminJob = async (req, res) => {
 
 export const getAllJobsForUser = async (req, res) => {
     try {
-        const jobs = await Job.find({})
+        const jobs = await Job.find({}).populate({ path: 'company' })
 
         if (jobs.length === 0) {
             return res.status(404).json({
