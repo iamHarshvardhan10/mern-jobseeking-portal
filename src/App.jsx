@@ -1,3 +1,4 @@
+import Companies from "./components/admin/Companies";
 import Login from "./components/auth/Login";
 import SignUp from "./components/auth/SignUp";
 import JobDescription from "./components/JobDescription";
@@ -21,6 +22,9 @@ const App = () => {
           <Route path="/description/:id" element={<JobDescription />} />
           <Route path="/browse" element={<Browse />} />
           <Route path="/view-profile" element={<Profile />} />
+
+          {/* admin page */}
+          <Route path="/admin/companies" element={<Companies />} />
         </Routes>
         <Footer />
       </BrowserRouter>
